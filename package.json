@@ -1,6 +1,6 @@
 {
-  "name": "grunt-outlayer-family-docs",
-  "version": "0.0.0",
+  "name": "grunt-fizzy-docs",
+  "version": "0.1.0",
   "description": "Grunt tasks for Masonry, Isotope and Packery docs",
   "main": "tasks/",
   "dependencies": {
