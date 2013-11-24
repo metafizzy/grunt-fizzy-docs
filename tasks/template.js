@@ -5,6 +5,19 @@ var marked = require('marked');
 var highlight = require('./utils/highlight');
 var parseJSONFrontMatter = require('./utils/parse-json-front-matter');
 
+// -------------------------- helpers -------------------------- //
+
+function extend( a, b ) {
+  for ( var prop in b ) {
+    a[ prop ] = b[ prop ];
+  }
+  return a;
+}
+
+function getFilename( filepath ) {
+  return path.basename( filepath, path.extname( filepath ) );
+}
+
 // -------------------------- Handlebar Helpers -------------------------- //
 
 // https://gist.github.com/meddulla/2571518
@@ -41,6 +54,16 @@ module.exports = function( grunt ) {
       handlebars.registerPartial( name, src );
     });
 
+    // get data
+    var data = {};
+    if ( opts.dataFiles ) {
+      var dataFiles = grunt.file.expand( opts.dataFiles );
+      dataFiles.forEach( function( filepath ) {
+        var name = getFilename( filepath );
+        data[ name ] = grunt.file.readJSON( filepath );
+      });
+    }
+
     // register any partial files
     for ( var partialName in opts.partialFiles ) {
       var partialFile = opts.partialFiles[ partialName ];
@@ -54,6 +77,13 @@ module.exports = function( grunt ) {
     // read file paths from JSON
     site.css = grunt.file.expand( grunt.file.readJSON( dataDir + '/css-sources.json' ) );
     site.js = grunt.file.expand( grunt.file.readJSON( dataDir + '/js-sources.json' ) );
+    // data used across site
+    var siteContext = {
+      site: site,
+      isDev: grunt.option('dev')
+    };
+    // add data
+    siteContext = extend( siteContext, data );
 
     this.files.forEach( function( file ) {
       file.src.forEach( function( filepath ) {
@@ -63,11 +93,10 @@ module.exports = function( grunt ) {
         src = parsed.src;
         var pageJson = parsed.json || {};
         var context = {
-          site: site,
           basename: path.basename( filepath, path.extname( filepath ) ),
-          page: pageJson,
-          isDev: grunt.option('dev')
+          page: pageJson
         };
+        context = extend( context, siteContext );
         // compile content
         var content = handlebars.compile( src )( context );
         content = highlight( content );
