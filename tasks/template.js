@@ -28,7 +28,7 @@ handlebars.registerHelper( 'if_equal', function( a, b, options ) {
 });
 
 handlebars.registerHelper( 'slug', function( str ) {
-  return str.replace( /[?]/, '' ).replace( /[\., ]+/gi, '-' ).toLowerCase();
+  return str.replace( /[?\(\)]+/g, '' ).replace( /[\., \/]+/gi, '-' ).toLowerCase();
 });
 
 // --------------------------  -------------------------- //
