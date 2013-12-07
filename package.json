@@ -1,6 +1,6 @@
 {
   "name": "grunt-fizzy-docs",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Grunt tasks for Masonry, Isotope and Packery docs",
   "main": "tasks/",
   "dependencies": {

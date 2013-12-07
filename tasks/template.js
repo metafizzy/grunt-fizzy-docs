@@ -1,3 +1,4 @@
+var fs = require('fs');
 var path = require('path');
 var handlebars = require('handlebars');
 var marked = require('marked');
@@ -87,6 +88,15 @@ module.exports = function( grunt ) {
 
     this.files.forEach( function( file ) {
       file.src.forEach( function( filepath ) {
+        // skip directories
+        if ( fs.lstatSync( filepath ).isDirectory() ) {
+          return;
+        }
+        var splitPath = filepath.split( path.sep );
+        // remove leading directory
+        if ( splitPath.length > 1 ) {
+          splitPath.splice( 0, 1 );
+        }
         // first process page source
         var src = grunt.file.read( filepath );
         var parsed = parseJSONFrontMatter( src );
@@ -94,7 +104,8 @@ module.exports = function( grunt ) {
         var pageJson = parsed.json || {};
         var context = {
           basename: path.basename( filepath, path.extname( filepath ) ),
-          page: pageJson
+          page: pageJson,
+          root_path: Array( splitPath.length ).join('../')
         };
         context = extend( context, siteContext );
         // compile content
@@ -103,11 +114,6 @@ module.exports = function( grunt ) {
         context.content = content;
 
         // process source into page template
-        var splitPath = filepath.split( path.sep );
-        // remove leading directory
-        if ( splitPath.length > 1 ) {
-          splitPath.splice( 0, 1 );
-        }
         var templated = templates[ opts.defaultTemplate ]( context );
         var dest = file.dest + splitPath.join( path.sep );
         grunt.file.write( dest, templated );
