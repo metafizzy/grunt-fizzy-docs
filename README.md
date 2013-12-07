@@ -68,7 +68,7 @@ Source files can contain JSON front matter, sort of like [Jekyll's YAML front ma
 
 JSON front matter is then passed in with the `page` variable for templating.
 
-``` mustache
+``` html
 <h1>{{page.title}}</h1>
 <ul class="nav">
   {{#each page.nav}}
@@ -87,7 +87,7 @@ Other variables:
 
 Here's how I use those variables
 
-``` mustache
+``` html
 </head>
   {{#if ref="{{root_path}}layout-modes/masonry}}
     <!-- DEV MODE - including each .css file -->
