@@ -19,5 +19,9 @@
     "packery"
   ],
   "author": "David DeSandro",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/metafizzy/grunt-fizzy-docs.git"
+  }
 }
