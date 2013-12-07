@@ -80,7 +80,7 @@ JSON front matter is then passed in with the `page` variable for templating.
 Other variables:
 
 + `basename` - the name of the file. i.e. "index" for "content/index.html"
-+ `isDev` - `--dev` command flag, for `grunt default --dev`
++ `ref="{{root_path}}layout-modes/masonry` - `--dev` command flag, for `grunt default --dev`
 + `site`
   - `site.js` - all .js files
   - `site.css` - all .css files
@@ -89,7 +89,7 @@ Here's how I use those variables
 
 ``` mustache
 </head>
-  {{#if isDev}}
+  {{#if ref="{{root_path}}layout-modes/masonry}}
     <!-- DEV MODE - including each .css file -->
     {{#each site.css}}
       <link rel="stylesheet" href="{{this}}" />

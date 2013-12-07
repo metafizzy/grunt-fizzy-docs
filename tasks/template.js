@@ -81,7 +81,7 @@ module.exports = function( grunt ) {
     // data used across site
     var siteContext = {
       site: site,
-      isDev: grunt.option('dev')
+      is_dev: grunt.option('dev')
     };
     // add data
     siteContext = extend( siteContext, data );
