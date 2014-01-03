@@ -85,11 +85,11 @@ Other variables:
   - `site.js` - all .js files
   - `site.css` - all .css files
 
-Here's how I use those variables
+Here's how I use those variables. See [desandro/masonry-docs/_templates/page.mustache](https://github.com/desandro/masonry-docs/blob/master/_templates/page.mustache)
 
 ``` html
 </head>
-  {{#if ref="{{root_path}}layout-modes/masonry}}
+  {{#if is_dev}}
     <!-- DEV MODE - including each .css file -->
     {{#each site.css}}
       <link rel="stylesheet" href="{{this}}" />
