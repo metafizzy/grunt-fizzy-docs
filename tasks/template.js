@@ -105,7 +105,8 @@ module.exports = function( grunt ) {
         var context = {
           basename: path.basename( filepath, path.extname( filepath ) ),
           page: pageJson,
-          root_path: Array( splitPath.length ).join('../')
+          // 404 pages should have / root paths
+          root_path: pageJson.is404 ? '/' : Array( splitPath.length ).join('../')
         };
         context = extend( context, siteContext );
         // compile content
